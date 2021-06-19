@@ -29,19 +29,19 @@
 //分类
 <div class='input-card'>
     <div class="input-item">
-        <input type="checkbox" checked id="play" checked onclick="togglePlay(this)"/>玩
+        <input type="checkbox" checked onclick="togglePlay(this)"/>玩
     </div>
     
     <div class="input-item">
-        <input type="checkbox" checked id="eat" onclick="toggleEat(this)"/>吃
+        <input type="checkbox"  checked onclick="toggleEat(this)"/>吃
     </div>
     
     <div class="input-item">
-        <input type="checkbox" checked id="live" onclick="toggleLive(this)"/>住
+        <input type="checkbox" checked onclick="toggleLive(this)"/>住
     </div>
 
     <div class="input-item">
-        <input type="checkbox" checked id="other" onclick="toggleOther(this)"/>备用
+        <input type="checkbox" checked onclick="toggleOther(this)"/>备用
     </div>
 </div>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=73005960fa56bfb55063b008cc908728"></script>
@@ -73,6 +73,11 @@
         "<b>4</b>"
     ];
 
+    var type = [1,2,3,4];
+    var markers1=[];
+    var markers2=[];
+    var markers3=[];
+    var markers4=[];
     var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -30)});
 
     for (var i = 0, marker; i < lnglats.length; i++) {
@@ -88,7 +93,23 @@
         });
         marker.content=infor[i];
         marker.link=link[i];
+        
         marker.on('click', markerClick);
+        marker.types=type[i];
+        switch (marker.types) {
+            case 1:
+                markers1.push(marker);
+                break;
+            case 2:
+                markers2.push(marker);
+                break;
+            case 3:
+                markers3.push(marker);
+                break;
+            case 4:
+                markers4.push(marker);
+                break;
+        }
     }
 
     function markerClick(e) {
@@ -103,7 +124,39 @@
             overView.hide();
         }
     }
-    
+
+    function togglePlay(checkbox) {
+        if (checkbox.checked) {
+            map.add(markers1);
+        } else {
+            map.remove(markers1);
+        }
+    }
+
+    function toggleEat(checkbox) {
+        if (checkbox.checked) {
+            map.add(markers2);
+        } else {
+            map.remove(markers2);
+        }
+    }
+
+    function toggleLive(checkbox) {
+        if (checkbox.checked) {
+            map.add(markers3);
+        } else {
+            map.remove(markers3);
+        }
+    }
+
+    function toggleOther(checkbox) {
+        if (checkbox.checked) {
+            map.add(markers4);
+        } else {
+            map.remove(markers4);
+        }
+    }
+
     AMap.plugin('AMap.Geolocation', function() {
         var geolocation = new AMap.Geolocation({
             // 是否使用高精度定位，默认：true
