@@ -170,7 +170,7 @@
             //  定位按钮的排放位置,  RB表示右下
             buttonPosition: 'RB'
         })
-        //map.addControl(geolocation);
+        map.addControl(geolocation);
         geolocation.getCurrentPosition(function(status,result){
             if(status=='complete'){
                 onComplete(result)
